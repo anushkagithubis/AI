@@ -1,0 +1,20 @@
+class first {
+public static void sendMail(String address, String subject, String body) {
+Messaging.SingleEmailMessagemail=newMessaging.SingleEmailMessage();
+String[] toAddresses = new String[] {address};
+mail.setToAddresses(toAddresses);
+mail.setSubject(subject);
+mail.setPlainTextBody(body);
+Messaging.sendEmail(new Messaging.SingleEmailMessage[] { mail });
+}
+}
+
+
+
+
+String subject = 'Speaker Confirmation';
+String address = 'YOUR_EMAIL_ADDRESS';
+Step 8: It will show you success
+String body = 'Thank you for attending conference.’
+EmailManager.sendMail(address, subject, body);
+

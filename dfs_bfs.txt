@@ -1,0 +1,50 @@
+class Graph:
+    def __init__(self, vertices):
+        self.V = vertices
+        self.graph = [[] for _ in range(vertices)]
+
+    def add_edge(self, u, v):
+        # Undirected graph
+        self.graph[u].append(v)
+        self.graph[v].append(u)
+
+    def dfs(self, node, visited):
+        visited[node] = True
+        print(node, end=' ')
+        for neighbor in self.graph[node]:
+            if not visited[neighbor]:
+                self.dfs(neighbor, visited)
+
+    def bfs(self, start):
+        visited = [False] * self.V
+        queue = [start]
+        visited[start] = True
+
+        while queue:
+            current = queue.pop(0)
+            print(current, end=' ')
+            for neighbor in self.graph[current]:
+                if not visited[neighbor]:
+                    queue.append(neighbor)
+                    visited[neighbor] = True
+
+# ====== User Input Section ======
+
+n = int(input("Enter number of vertices: "))
+e = int(input("Enter number of edges: "))
+
+g = Graph(n)
+
+print("Enter edges (u v) one per line:")
+for _ in range(e):
+    u, v = map(int, input().split())
+    g.add_edge(u, v)
+
+start_node = int(input("Enter starting node: "))
+
+print("\nDFS Traversal:")
+visited_dfs = [False] * n
+g.dfs(start_node, visited_dfs)
+
+print("\n\nBFS Traversal:")
+g.bfs(start_node)

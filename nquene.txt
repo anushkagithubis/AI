@@ -1,0 +1,37 @@
+def print_board(positions, n):
+    for row in range(n):
+        for col in range(n):
+            if positions[row] == col:
+                print("Q", end=" ")
+            else:
+                print(".", end=" ")
+        print()
+    print()
+
+def is_safe(row, col, positions):
+    for i in range(row):
+        # Check same column or diagonal
+        if positions[i] == col or \
+           positions[i] - i == col - row or \
+           positions[i] + i == col + row:
+            return False
+    return True
+
+def solve_n_queens(n):
+    def backtrack(row, positions):
+        if row == n:
+            print_board(positions, n)
+            return
+
+        for col in range(n):
+            if is_safe(row, col, positions):
+                positions[row] = col
+                backtrack(row + 1, positions)
+                positions[row] = -1  # Backtrack
+
+    positions = [-1] * n  # -1 means no queen placed yet
+    backtrack(0, positions)
+
+# ==== USER INPUT ====
+n = int(input("Enter the number of queens (N): "))
+solve_n_queens(n)

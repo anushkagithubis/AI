@@ -1,0 +1,49 @@
+import heapq
+
+# A* Algorithm for Game Search
+def a_star(grid, start, goal):
+    directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]  # Right, Left, Down, Up
+    open_list = [(0, start)]
+    g_score = {start: 0}
+    came_from = {}
+
+    while open_list:
+        _, current = heapq.heappop(open_list)
+
+        # Goal Reached
+        if current == goal:  
+            path = []
+            while current in came_from:
+                path.append(current)
+                current = came_from[current]
+            return [start] + path[::-1]
+
+        # Explore neighbors
+        for dx, dy in directions:
+            neighbor = (current[0] + dx, current[1] + dy)
+
+            # Check if move is valid
+            if 0 <= neighbor[0] < len(grid) and 0 <= neighbor[1] < len(grid[0]) and grid[neighbor[0]][neighbor[1]] == 0:
+                new_cost = g_score[current] + 1
+                if neighbor not in g_score or new_cost < g_score[neighbor]:
+                    came_from[neighbor] = current
+                    g_score[neighbor] = new_cost
+                    f_score = new_cost + abs(neighbor[0] - goal[0]) + abs(neighbor[1] - goal[1])
+                    heapq.heappush(open_list, (f_score, neighbor))
+
+    return None  # No path found
+
+# Input grid size
+rows, cols = map(int, input("Enter grid size (rows cols): ").split())
+
+# Input grid
+print(f"Enter the grid ")
+grid = [list(map(int, input().split())) for _ in range(rows)]
+
+# Input start and goal positions
+start = tuple(map(int, input("Enter start position (row col): ").split()))
+goal = tuple(map(int, input("Enter goal position (row col): ").split()))
+
+# Run A* and display result
+path = a_star(grid, start, goal)
+print("Path:", path if path else "No path found!")

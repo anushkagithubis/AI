@@ -14,7 +14,6 @@ Messaging.sendEmail(new Messaging.SingleEmailMessage[] { mail });
 
 String subject = 'Speaker Confirmation';
 String address = 'YOUR_EMAIL_ADDRESS';
-Step 8: It will show you success
-String body = 'Thank you for attending conference.’
+String body = 'Thank you for attending conference’;
 EmailManager.sendMail(address, subject, body);
 

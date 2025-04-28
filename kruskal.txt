@@ -1,0 +1,39 @@
+
+def find(parent, i):
+    if parent[i] != i:
+        parent[i] = find(parent, parent[i])
+    return parent[i]
+
+def union(parent, u, v):
+    parent[find(parent, u)] = find(parent, v)
+
+# User input
+edges = []
+vertices = set()
+
+n = int(input("Enter number of edges: "))
+print("Enter edges in format: vertex1 vertex2 weight")
+
+for _ in range(n):
+    u, v, w = input().split()
+    edges.append((int(w), u, v))
+    vertices.update([u, v])
+
+# Kruskal's Algorithm
+edges.sort()
+parent = {v: v for v in vertices}
+mst = []
+total_weight = 0
+
+for weight, u, v in edges:
+    if find(parent, u) != find(parent, v):
+        union(parent, u, v)
+        mst.append((u, v, weight))
+        total_weight += weight
+
+# Output
+print("\nEdges in MST:")
+for u, v, w in mst:
+    print(f"{u} -- {v} == {w}")
+
+print(f"\nTotal weight of MST: {total_weight}")
